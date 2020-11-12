@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
+    <title>Dynamic Quotes Website</title>
+    <style>
+        body{
+            background-color: crimson;
+        }
+        #quotes {
+            text-align: center;
+            margin: auto;
+            color: black;
+            background-color: cornflowerblue;
+            width: 500px;
+            height: 100px;
+            border: 5px solid blue;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        #newQ {
+            position: absolute;
+            top: 50%;
+            right: 50%;
+            border-radius: 25px;
+            margin-left: 20px;
+         
+            padding: 10px;
+
+        }
+
+        #author {
+            background-color: cornflowerblue;
+            text-align: center;
+            width: 500px;
+            height: 50px;
+            border: 5px solid blue;
+            margin: auto;
+            font-weight: bold;
+            font-size: 20px;
+            
+        }
+        #tweet{
+            position: absolute;
+            top: 50%;
+            right: 50%;
+            border-radius: 25px;
+            margin-top: 50px;
+            padding: 20px;
+        }
+        #hdg{
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 id="hdg">Dynamic Quotes Website</h1>
+    <div id="quotes"></div>
+    <div id="author"></div>
+    <button id="newQ">New Quotes</button>
+    <button id="tweet">Tweet</button>
+
+    <script>
+        const quotes = document.getElementById("quotes");
+        const author = document.getElementById("author");
+        const newQ = document.getElementById("newQ");
+        const tweet=document.getElementById("tweet");
+        let realData = "";
+        let quotesData = "";
+        const getNewQuotes = () => {
+            let rnum = Math.floor(Math.random() * 20);
+            // console.log(realdata[rnum].author);
+            quotesData = realData[rnum];
+            quotes.innerText = `${quotesData.text}`;
+            quotesData.author == null
+                ? (author.innerText = unknown)
+                : (author.innerText = `${quotesData.author}`);
+
+
+        };
+        const tweetnow=()=>{
+          let tweetpost=`https://twitter.com/intent/tweet?text=${quotesData.text} ${quotesData.author}`; 
+           window.open(tweetpost);
+        }
+
+        const getQuotes = async () => {
+            const api = "https://type.fit/api/quotes";
+            try {
+                let data = await fetch(api);
+                realData = await data.json();
+                getNewQuotes();
+
+            } catch (error) { }
+        };
+        tweet.addEventListener("click",tweetnow);
+        newQ.addEventListener("click", getNewQuotes);
+      
+        getQuotes();
+    </script>
+</body>
+
+</html>
